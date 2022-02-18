@@ -1,0 +1,280 @@
+## Bulls & Cows (2019 Version) ##
+
+I. Introduction to the Game
+-Important to understand the game we are going to create. 
+-Terminal game, but within Unreal
++Allows us to use Unreal specific C++
+-How does it work?
++Word guessing game. 
++Guess an Isogram (a word without any repeating letters)
++Letter in a guess in the right place = Bull
++Letter in a guess but not the right place = Cow
+-Mechanics
++Hidden word in a list
++Number of lives
++Guess
++Lose a life if wrong
++Display bulls and cows
++If correct word is guess, you win
++If run out of lives, you lose
+
+II. Installing the Game
+-Download, Extract and Import the game from the Resources and open it in Unreal
++Make sure it is working by double clicking the file
++Rebuild the files if possible.
++If any build errors, look for 'Help Us to Help You' in the class
+-Shaders will need to be updated
+-Click the Build Button (at anytime)
+-Click the Compile Button
+-See if the game can be launched
+-"Why are we getting a game with code in it??"
++In this project it is the first time it is being introduce to Unreal
++So it is to help newer people. Eventually it will be a blank project (Building Escape?)
+
+-Note: Sometimes when launching, you might get 'Game module cannot be loaded'
++One solution is delete the 'Binaries' folder in the project and re-open
++It will take longer to open, and you have to rebuild
+
+
+III. Asking For Help
+-Give project log
++Inside of project folder->Saved->Logs->Name of Project.txt file
++Give a copy of that log or cut and paste (use code formatting)
+-Help answer other people's questions
++Once you are able to answer questions, you'll have grounded knowledge
+-Be specific
+-Tell people what you tried
+-Let people know when the issue is resolved
+
+IV. Looking Around Unreal
+-Viewport (Main Big Window)
+-Place Actors (Setting up Assets and have items)
+-Tool Bar (Save Current, Compile are important)
++Remember to compile after making the code
+-World Outliner (Hierarchy of the world)
+-Details (Click an item and get more details)
+-Content Browser (Look up things like Assets, Scripts, etc.)
+-Interface is very customizable
++Go to Window->Reset Layout if you get mixed up
++This will set it back to Default
++Click and drag windows and move them around if wanted
++Anchor them or float them
++Or grab the handle and move it up and down
++If deleted, go to Window->Click your window
+
+V. The Viewport
+-Window->Viewports->Up to 4
++Add new Viewports for practicing in other views or if you don't want to change your current one
+-Hold LftClk, Move like a shopping cart
+-RgtClk, Look Around
+-MidClk, Pan
+-Hold RgtClk
++W,S,A,D for moving like a 1st person shooter, E move up, Q move down
++Scroll wheel to speed up/slow down movement
+-By the Play Button Dropdown->Advance Settings, can do stuff like 'Game Gets Mouse Control'
+-In this game, press Play then Tab to get into the terminal
+
+VI. Actors
+-Any object in the level is an actor
+-They all have a transform
+-There are different types of actors
+-Click a cow
++Notice it is a Static Mesh Actor
+-There is a Player Start Actor
+-To see what type of actor it is, look at the 'Type' in World Outliner of an Actor you selected
+-Translate Gizmo
++There is surface snapping in the Snapping Options
++Including Rotate to Surface Normal
++You turn this off if you want your object to be upright on slopes, etc (like tress)
++And on if you want the object to lean
++You can put an actor on the ground
++Also press the 'End' key to snap
+-W (Translate), E (Rotate), R (Scale)
+-In the Details->Transform
++You can lock the scale, rotate, and translate. Then when you change a value, all 3 axes will change to it
+-Hold Shift+Clk to select multiple objects and move things together
++Can be done in Viewport or World Outliner
+-RgtClk a Transform and Copy it then paste it on another object to put them in the same place
++That's good for linking trees stumps/leaves together
+
+V. Adding Actors
+-Manually
++Content Browser->Enviornment-Meshes->etc
++Or, select an object, Ctrl+C, Ctrl+V
++OR, select an object, Hold Alt and drag out an object
++Make sure to repress Alt for each new copy.
+-In case you delete something like the player start, you can find it in the Place Actors Window
+
+VI. Editing The Landscape
+-In the Modes Option in the Toolbar
+-Select the Landscape (Shift+3)
++Manage, Sculpt, and Paint
++In Sculpt->Brush Settings
++Brush Falloff effects the level of hill and Tool Strength effects the rapidness
++Hold Shift and click to do the reverse 
++Can Smooth things as well
++In Paint
++Can add layers to make paths, grass, beach/sand, etc on the landscape
+
+VII. Actors and Components
+-Actor is a container that can have many components
+-Components have different types
+-Select a cow and check the details tab
++There is a section for components
++There is the static mesh component
++You can Add Component in this section
+-The BullCowCartiage Componet will be added to the terminal
++It is found in Sources->C++ Classes->BullCowGame
++The terminal is already programmed, but the Cartiage is not
+-Add the BullCowCartiage Component to the Terminal Actor
+
+VIII. Using the In Game Terminal
+-Open the BullCowCartiage.cpp
++Under Super::BeginPlay();
+PrintLine("Hi there!");
++Don't forget to Compile in UE4. 
++If there is an error in Visual Studio, Compiling in UE4 might still work
+-Change the PrintLine to give a welcome message to the player, a newline, and ask them to add something and press entered.
+-And on the Input function in the cpp, add the ClearScreen() method. 
+-Sometimes compiling constantly will build up the Binaries. Close and open the editor to clear this issue
+
+IX. Unreal's Types - FString
+-In TripleX, we used std::cout << "Welcome";
+-In Standard C++, use std::string Word = "Welcome";
+-In Unreal, use FString instead
+-Later on we will use int32 instead of int
++There are many things throughout that we will pick up
+-OnInput function
++Declare and initialize an FString called HiddenWord
++Assign it an isogram of your choosing
+
+X. The TEXT Macro
+- In UE's Documentation. 
++In general, use TEXT() Macro when using string variables. It encodes literals to make sure they display on multiple platforms. 
++On the HiddenWord string, wrap it in TEXT()
++And wrap all string literals in a TEXT Macro
+
+XI. Basic Game Loop
+-What is a Game Loop?
++Process the player goes through
++There are usually many loops within a larger game
+-Why write it down
++Visualizing the process before you start coding will check your logic
++Describe the intended behavior, does the code match??
++Defines the scope of the game
+-Note: Look up flow charts for how to write a basic loop
++Print welcome message
++Hidden Word Set (Hard Coded for now)
++Ask For Guess (Wait for input)
++Is Correct->Yes (You Win)->No (You Lose)
+
+XII. Accessing Player Input
+-Input is the variable name of the OnInput function in the cpp file
++So if we wanted to repeat it...
+-Next write code that tests whether the Input is equal to the HiddenWord
++Try an if else conditional 
+
+XIII. Instance Variables
+-Declare the HiddenWord in the header (.h) file instead of the .cpp 
+-Scope Across Our Class
+-HiddenWord needs to be used across multiple functions in the BullCowCartiage Class
+-BCC Class creates an instance
+-HiddenWord can be used across that instance
++FString HiddenWord would need to be in the .h file. And assign the value in the .cpp
+
+XIV. Full Game Loop
+-So far we have basic functionality working
+-But lets think of how the game works and its behavior
+-Additional Game Components
++We need lives
++Player input needs checking
++Wrong answer should remove a life
++When lives run out, what happens then?
++Flow Chart:
+Welcome Message->Set Lives;HiddenWord->Ask For Guess Wait For Input->Check if is Valid and Correct->Yes(You Win)->No (Subtract Life)->Are Lives > 0?->Yes (Loop)->No->Print Fail Message->Prompt to Play Again->Yes->Loop to beginning->No->Quit Game
+
+XV. Pseudo Coding
+-Laying out our coding structure
++Writing code and not going in blind
+-Complements flowchart approach
+-Allows to put down ideas and keep track of progress
+-Easier to catch logical errors early
+-Detailed, easy to read template for the rest of the code
+
+(Note: From now on, child subjects of + are now *)
+
+XVI. First Function
+-Function ideally should do 1 thing
++Works best when they are specific
+*Much easier to code, debug and name 
++Should be able to reuse it as well
+-Writing a function
++void UBullCowCartridge::InitGame()
+*UBullCowCartridge is the class that InitGame is a part of
+*:: calls the right function to the right class
+*Otherwise it is a non-member function
+-Declare in the header (.h) file and define in the .cpp
+-Call the function where it needs to be call, whether in BeginPlay or another function
+-Note: When you change code in .h, compiling takes a little longer to complete
+
+XVII. Find And Replace
+-Across multiple files
++Use Ctrl+RR to replace all of a word within the solution
++Use Ctrl+F to Find a File
+
+XVIII. The C++ Dot Operator
+-Allows us to access functions of an FString
+-In OnInput
++HiddenWord.Len();//Get the length of the HiddenWord
+-Compare HiddenWord to Input
++Add a check that the number of letters the player types is the same
++Create a nested if statement
++Equal to is ==
++Not Equal to is !=
+
+XIX. Formating Strings
+-Insert data into our strings using a format specifier
++Use the FString::Printf() function to do this.
++Format specificers: %s for strings, %i for integers
+-Static Member Function
++Printf() Doesn't require an instance of an FString.
++It doesn't print anything, it formats
++PrintLine(FString::Printf(TEXT("Hello! %s"), *HiddenWord));
+-In this particular code, the Printf is defined in the PrintLine function, so you don't need to do this
++PrintLine(TEXT("The HiddenWord is %i characters long."), HiddenWord.Len());
+
+XX. Booleans
+- True or False
++Check if the game is won or not
++In Unreal Bools are prefixed with a 'b'
+*Example: bool bGameOver;
+-Note: Comment Block is /* Multi-line comments */
+-Better Behaving Code
++Create EndGame() function 
++Get it to set bGameOver to true and instruc player to press enter to continue
++Implement an if statement checking if the game is over or not and run our existing code if not
++Get the game to welcome the player again. 
+
+XXI. Increment and Decrement Operators
+-Pre ++Lives --Lives
+-Post Lives++ Lives--
++Pre does the operation and references the results
++Post references the results and then does the operation
+* Lives = 2; ++Lives = 3; Lives-- = 3; Lives = 2
+-Set Lives to HiddenWord.Len()
+-Note: If UE4 doesn't do what you expect, try Compiling again! 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
